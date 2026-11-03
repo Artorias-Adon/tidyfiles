@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Tkinter desktop interface for TidyFiles."""
 
 from __future__ import annotations
@@ -338,7 +339,7 @@ class TidyFilesApp:
         version_pill.pack(side="right")
         tk.Label(
             version_pill,
-            text=f"v{__version__} · MIT",
+            text=f"v{__version__} · GPLv3+",
             bg=NAVY_SOFT,
             fg="#AFC0DE",
             font=self.fonts["tiny"],

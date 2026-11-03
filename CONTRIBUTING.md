@@ -31,6 +31,11 @@ on Debian/Ubuntu).
   `tidyfiles/categories.py` rather than creating a new near-duplicate category.
 - Include a screenshot for visible UI changes.
 
+## License of contributions
+
+By submitting a pull request you agree that your contribution is licensed
+under the project's **GPL-3.0-or-later** license.
+
 ## 中文说明
 
 欢迎提交 Issue 和 Pull Request：

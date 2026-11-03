@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Platform paths and small display helpers."""
 
 from __future__ import annotations

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Core scanning, planning and file-moving engine.
 
 The engine is deliberately UI-free: the Tkinter app and the CLI both build on

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Built-in file categories and extension matching.
 
 The category ``key`` is stable API (used by the CLI and settings), while

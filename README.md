@@ -11,7 +11,7 @@
 <p align="center">
   <a href="https://github.com/Artorias-Adon/tidyfiles/actions/workflows/tests.yml"><img src="https://github.com/Artorias-Adon/tidyfiles/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
   <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.10%2B-3776AB.svg" alt="Python 3.10+"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-22c55e.svg" alt="MIT License"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0--or--later-22c55e.svg" alt="GPL-3.0-or-later"></a>
 </p>
 
 <p align="center">
@@ -199,7 +199,8 @@ tidyfiles/
 ├── .github/workflows/       # GitHub Actions
 ├── start.bat / start.sh
 ├── pyproject.toml
-└── LICENSE
+├── NOTICE                   # 版权与 GPL-3.0-or-later 声明
+└── LICENSE                  # GNU GPL v3 完整条款
 ```
 
 核心引擎不依赖 Tkinter，GUI 与 CLI 共用同一套扫描和执行逻辑。
@@ -279,6 +280,9 @@ python -m tidyfiles -s "/path/to/inbox" --dry-run
 See the Chinese sections above for the full usage guide, safety notes, and
 development instructions.
 
+TidyFiles is licensed under the **GNU General Public License v3.0 or later**
+(GPL-3.0-or-later).
+
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request。请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)，并在提交前运行测试。
@@ -287,4 +291,10 @@ development instructions.
 
 ## License
 
-[MIT](LICENSE) © 2026 Artorias-Adon
+TidyFiles 采用 [GNU General Public License v3.0 or later](LICENSE)
+（**GPL-3.0-or-later**）授权，版权声明见 [NOTICE](NOTICE)。
+
+你可以自由使用、修改和分发本软件；衍生作品需要继续以相同许可证开源。
+本软件不提供任何担保，完整条款以 [LICENSE](LICENSE) 为准。
+
+Copyright (C) 2026 Artorias-Adon

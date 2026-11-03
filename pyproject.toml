@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "A local-first desktop folder organizer that sorts files by type, with preview and CLI."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = { text = "GPL-3.0-or-later" }
 authors = [{ name = "Artorias-Adon" }]
 keywords = ["file-organizer", "desktop", "tkinter", "productivity", "python"]
 classifiers = [
@@ -16,7 +16,7 @@ classifiers = [
     "Environment :: Win32 (MS Windows)",
     "Environment :: X11 Applications",
     "Intended Audience :: End Users/Desktop",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Natural Language :: Chinese (Simplified)",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
@@ -45,6 +45,7 @@ Issues = "https://github.com/Artorias-Adon/tidyfiles/issues"
 
 [tool.setuptools]
 packages = ["tidyfiles"]
+license-files = ["LICENSE", "NOTICE"]
 
 [tool.setuptools.package-data]
 tidyfiles = ["assets/*.png", "assets/*.ico"]

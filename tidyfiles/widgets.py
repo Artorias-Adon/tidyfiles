@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Small hand-drawn Tk widgets used by the desktop UI.
 
 Tk's native widgets are functional but visually dated, so the app uses a few

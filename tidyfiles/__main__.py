@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Run the GUI by default, or the CLI when arguments are supplied."""
 
 from __future__ import annotations

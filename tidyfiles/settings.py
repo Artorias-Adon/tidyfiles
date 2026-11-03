@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
 """Small, dependency-free persistence for the desktop app."""
 
 from __future__ import annotations
