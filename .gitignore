@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+*.spec
+
+# Local test / screenshot helpers
+.appdata/
+.demo/
+.capture.ps1
+.gui_smoke.py
+gui_err.txt
+gui_out.txt
+screenshots/desktop.png
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini

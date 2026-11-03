@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tidyfiles"
+version = "1.0.0"
+description = "A local-first desktop folder organizer that sorts files by type, with preview and CLI."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Artorias-Adon" }]
+keywords = ["file-organizer", "desktop", "tkinter", "productivity", "python"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: X11 Applications",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: Chinese (Simplified)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Desktop Environment :: File Managers",
+    "Topic :: Utilities",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pyinstaller>=6.0"]
+
+[project.scripts]
+tidyfiles = "tidyfiles.__main__:main"
+tidyfiles-cli = "tidyfiles.cli:main"
+
+[project.gui-scripts]
+tidyfiles-gui = "tidyfiles.gui:main"
+
+[project.urls]
+Homepage = "https://github.com/Artorias-Adon/tidyfiles"
+Repository = "https://github.com/Artorias-Adon/tidyfiles"
+Issues = "https://github.com/Artorias-Adon/tidyfiles/issues"
+
+[tool.setuptools]
+packages = ["tidyfiles"]
+
+[tool.setuptools.package-data]
+tidyfiles = ["assets/*.png", "assets/*.ico"]
