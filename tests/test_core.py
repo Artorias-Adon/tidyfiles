@@ -5,6 +5,7 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tidyfiles.categories import (
     CATEGORY_BY_KEY,
@@ -12,6 +13,7 @@ from tidyfiles.categories import (
     resolve_category,
     selected_categories,
 )
+from tidyfiles.cli import _configure_output
 from tidyfiles.organizer import (
     Operation,
     Organizer,
@@ -312,6 +314,38 @@ class UtilityTests(unittest.TestCase):
         self.assertEqual(tail_ellipsis("abc", 10), "abc")
         self.assertTrue(tail_ellipsis("a" * 100 + "end", 20).endswith("end"))
         self.assertEqual(len(tail_ellipsis("a" * 100, 20)), 20)
+
+
+class CliEncodingTests(unittest.TestCase):
+    def test_reconfigures_legacy_stream_to_utf8(self) -> None:
+        class FakeStream:
+            encoding = "cp1252"
+            reconfigured = None
+
+            def reconfigure(self, **kwargs) -> None:
+                self.reconfigured = kwargs
+                self.encoding = kwargs["encoding"]
+
+        stdout = FakeStream()
+        stderr = FakeStream()
+        with patch("tidyfiles.cli.sys.stdout", stdout), patch(
+            "tidyfiles.cli.sys.stderr", stderr
+        ):
+            _configure_output()
+        self.assertEqual(stdout.encoding, "utf-8")
+        self.assertEqual(stderr.reconfigured["errors"], "replace")
+
+    def test_leaves_utf8_stream_untouched(self) -> None:
+        class Utf8Stream:
+            encoding = "utf-8"
+
+            def reconfigure(self, **_kwargs) -> None:
+                raise AssertionError("should not reconfigure UTF-8 output")
+
+        with patch("tidyfiles.cli.sys.stdout", Utf8Stream()), patch(
+            "tidyfiles.cli.sys.stderr", Utf8Stream()
+        ):
+            _configure_output()
 
 
 class SettingsTests(unittest.TestCase):

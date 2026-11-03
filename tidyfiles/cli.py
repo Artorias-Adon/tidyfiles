@@ -17,6 +17,21 @@ from .organizer import (
 from .paths import human_size
 
 
+def _configure_output() -> None:
+    """Keep Chinese output readable on legacy Windows code pages and CI pipes."""
+
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        if (getattr(stream, "encoding", "") or "").casefold().replace("-", "") == "utf8":
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except (OSError, ValueError):
+            pass
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="tidyfiles",
@@ -117,6 +132,7 @@ def _print_plan(plan, scan) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    _configure_output()
     parser = build_parser()
     args = parser.parse_args(argv)
 
