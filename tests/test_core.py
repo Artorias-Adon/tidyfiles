@@ -16,6 +16,7 @@ from tidyfiles.categories import (
 )
 from tidyfiles.cli import _configure_output
 from tidyfiles.organizer import (
+    ConflictPolicy,
     Operation,
     Organizer,
     OrganizerError,
@@ -147,6 +148,20 @@ class PlanTests(OrganizerTestCase):
     def test_unknown_category_is_rejected(self) -> None:
         with self.assertRaises(OrganizerError):
             self.organizer.build_plan(self.scan, self.destination, selected_categories=["nope"])
+
+
+class ConflictPolicyTests(unittest.TestCase):
+    def test_user_facing_labels(self) -> None:
+        self.assertEqual(ConflictPolicy.RENAME.label, "保留两者")
+        self.assertEqual(ConflictPolicy.SKIP.label, "略过新文件")
+        self.assertEqual(ConflictPolicy.OVERWRITE.label, "覆盖旧文件")
+
+    def test_each_policy_has_a_description(self) -> None:
+        descriptions = {policy.description for policy in ConflictPolicy}
+        self.assertEqual(len(descriptions), 3)
+        self.assertIn("新文件自动重命名", ConflictPolicy.RENAME.description)
+        self.assertIn("不导入新文件", ConflictPolicy.SKIP.description)
+        self.assertIn("覆盖旧文件", ConflictPolicy.OVERWRITE.description)
 
 
 class ExecuteTests(OrganizerTestCase):

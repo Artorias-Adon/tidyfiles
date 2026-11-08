@@ -46,9 +46,17 @@ class ConflictPolicy(str, Enum):
     @property
     def label(self) -> str:
         return {
-            ConflictPolicy.RENAME: "自动重命名",
-            ConflictPolicy.SKIP: "跳过",
-            ConflictPolicy.OVERWRITE: "覆盖",
+            ConflictPolicy.RENAME: "保留两者",
+            ConflictPolicy.SKIP: "略过新文件",
+            ConflictPolicy.OVERWRITE: "覆盖旧文件",
+        }[self]
+
+    @property
+    def description(self) -> str:
+        return {
+            ConflictPolicy.RENAME: "保留旧文件，新文件自动重命名后导入",
+            ConflictPolicy.SKIP: "保留旧文件，不导入新文件",
+            ConflictPolicy.OVERWRITE: "用新文件覆盖旧文件",
         }[self]
 
 
@@ -302,7 +310,7 @@ class Organizer:
         try:
             conflict = ConflictPolicy(conflict)
         except ValueError as error:
-            raise OrganizerError(f"未知的重名处理方式：{conflict}") from error
+            raise OrganizerError(f"未知的重复文件处理方式：{conflict}") from error
 
         if plan.destination == plan.source:
             raise OrganizerError("输出文件夹不能与源文件夹相同。")
@@ -353,7 +361,7 @@ class Organizer:
                         category,
                         item.entry.size,
                         "skipped",
-                        "输出位置已存在同名文件，按设置跳过",
+                        "输出位置已存在同名文件，按设置略过新文件",
                     )
                     outcomes.append(outcome)
                     self._notify(progress, index + 1, total, outcome)

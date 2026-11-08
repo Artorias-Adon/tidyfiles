@@ -54,10 +54,13 @@ from .widgets import (
 REPO_URL = "https://github.com/Artorias-Adon/tidyfiles"
 ASSETS_DIR = Path(__file__).resolve().parent / "assets"
 
+CONFLICT_ORDER = (
+    ConflictPolicy.RENAME,
+    ConflictPolicy.SKIP,
+    ConflictPolicy.OVERWRITE,
+)
 CONFLICT_LABELS: dict[str, str] = {
-    ConflictPolicy.RENAME.value: "自动重命名",
-    ConflictPolicy.SKIP.value: "跳过",
-    ConflictPolicy.OVERWRITE.value: "覆盖",
+    policy.value: policy.label for policy in CONFLICT_ORDER
 }
 CONFLICT_BY_LABEL = {label: key for key, label in CONFLICT_LABELS.items()}
 
@@ -650,7 +653,7 @@ class TidyFilesApp:
 
         tk.Label(
             controls,
-            text="重名文件",
+            text="重复文件",
             bg=CARD,
             fg=MUTED,
             font=self.fonts["small"],
@@ -658,9 +661,9 @@ class TidyFilesApp:
         self.conflict_combo = ttk.Combobox(
             controls,
             textvariable=self.conflict_label_var,
-            values=list(CONFLICT_LABELS.values()),
+            values=[CONFLICT_LABELS[policy.value] for policy in CONFLICT_ORDER],
             state="readonly",
-            width=10,
+            width=12,
             style="Tidy.TCombobox",
             font=self.fonts["small"],
         )
@@ -1074,6 +1077,7 @@ class TidyFilesApp:
     def _on_conflict_changed(self, _event=None) -> None:
         label = self.conflict_label_var.get()
         self.conflict_var.set(CONFLICT_BY_LABEL.get(label, ConflictPolicy.RENAME.value))
+        self.detail_label.configure(text=ConflictPolicy(self.conflict_var.get()).description)
 
     def _toggle_categorize(self) -> None:
         if self.busy:
@@ -1463,7 +1467,7 @@ class TidyFilesApp:
             f"（{human_size(plan.total_size)}）到：\n"
             f"{plan.destination}\n\n"
             f"分类：{'按文件类型创建子文件夹' if plan.categorized else '全部放入同一层'}\n"
-            f"重名文件：{conflict.label}{note}"
+            f"重复文件：{conflict.label}（{conflict.description}）{note}"
         )
         if not messagebox.askokcancel(
             "确认开始整理",
@@ -1548,7 +1552,7 @@ class TidyFilesApp:
         label = {
             "copied": "已复制",
             "moved": "已移动",
-            "skipped": "已跳过",
+            "skipped": "已略过",
             "failed": "失败",
         }.get(outcome.status, "")
         detail = (
@@ -1575,7 +1579,7 @@ class TidyFilesApp:
         if result.moved:
             parts.append(f"已移动 {result.moved:,} 个")
         if result.skipped:
-            parts.append(f"跳过 {result.skipped:,} 个")
+            parts.append(f"略过 {result.skipped:,} 个")
         if result.failed:
             parts.append(f"失败 {result.failed:,} 个")
         summary = " · ".join(parts) or "没有文件被处理"

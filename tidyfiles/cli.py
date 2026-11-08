@@ -68,7 +68,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--conflict",
         choices=[policy.value for policy in ConflictPolicy],
         default=ConflictPolicy.RENAME.value,
-        help="重名文件处理方式（默认：rename）",
+        help=(
+            "重复文件处理：rename=保留两者，skip=略过新文件，"
+            "overwrite=覆盖旧文件（默认：rename）"
+        ),
     )
     parser.add_argument(
         "--dry-run",
@@ -168,19 +171,21 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     operation = Operation.MOVE if args.move else Operation.COPY
-    print(f"\n正在{operation.label} {len(plan.files)} 个文件…")
+    conflict = ConflictPolicy(args.conflict)
+    print(f"\n重复文件：{conflict.label}（{conflict.description}）")
+    print(f"正在{operation.label} {len(plan.files)} 个文件…")
     try:
         result = organizer.execute(
             plan,
             operation=operation,
-            conflict=args.conflict,
+            conflict=conflict,
         )
     except OrganizerError as error:
         print(f"错误：{error}", file=sys.stderr)
         return 2
 
     print(
-        f"完成：成功 {result.completed}，跳过 {result.skipped}，失败 {result.failed}。"
+        f"完成：成功 {result.completed}，略过 {result.skipped}，失败 {result.failed}。"
     )
     if result.report_path:
         print(f"记录：{result.report_path}")
